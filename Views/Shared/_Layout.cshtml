@@ -1,0 +1,78 @@
+﻿@model AddressBook.Models.ContactViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AddressBook</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AddressBook.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    <header>
+        <div class="title-section">
+            <h1>Address Book</h1>
+        </div>
+        <nav class="nav-section">
+            <ul>
+                <li>
+                    <a onclick="DirectHome()" id="Home">HOME</a>
+                </li>
+                <li>
+                    <a onclick="EnableForm()">+ADD</a>
+                </li>
+            </ul>
+            <p>
+                <img src="~/assets/images/blog-icon.png">
+            </p>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+    </div>
+    @using (Html.BeginForm("AddContact", "Home", FormMethod.Post, new { @class = "contact-form" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="form-fields">
+            <label>Name</label>
+            @Html.EditorFor(model=>model.NewContact.Name)
+            @Html.ValidationMessageFor(model => model.NewContact.Name)
+            <label>Email</label>
+            @Html.TextBoxFor(model=>model.NewContact.Email)
+            @Html.ValidationMessageFor(model => model.NewContact.Email)
+            <div class="mobile-items">
+                <div>
+                    <label>Mobile</label>
+                    @Html.TextBoxFor(model=>model.NewContact.Mobile)
+                    @Html.ValidationMessageFor(model => model.NewContact.Mobile)
+                </div>
+                <div class="end-position">
+                    <label>Landline</label>
+                    @Html.TextBoxFor(model=>model.NewContact.Landline)
+                    @Html.ValidationMessageFor(model => model.NewContact.Landline)
+                </div>
+            </div>
+            <label>Website</label>
+            @Html.TextBoxFor(model=>model.NewContact.Website)
+            @Html.ValidationMessageFor(model => model.NewContact.Website)
+            <label>Address</label>
+            @Html.TextBoxFor(model=>model.NewContact.Address, new {@class="address-box"})
+            @Html.ValidationMessageFor(model => model.NewContact.Address)
+        </div>
+        <div>
+            <input type="Submit" value="Add">
+        </div>
+    }
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

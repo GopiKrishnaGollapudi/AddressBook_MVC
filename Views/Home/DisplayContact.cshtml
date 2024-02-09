@@ -1,0 +1,122 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model ContactViewModel
+
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/display.css" asp-append-version="true" />
+<div class="content">
+    <div class="contact-table">
+        @if (Model != null && Model.Contacts.Any())
+        {
+            <div>
+                CONTACTS
+            </div>
+            <table>
+                @foreach (Contact contact in Model.Contacts)
+                {
+                    @if (contact.ContactId == Model.EditContact.ContactId)
+                    {
+                        <tr data-contact-id="@contact.ContactId" onclick="display(this)" class="focus-contact">
+                            <td class="contact-name">@contact.Name</td>
+                            <td>@contact.Email</td>
+                            <td>@contact.Address</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr data-contact-id="@contact.ContactId" onclick="display(this)">
+                            <td class="contact-name">@contact.Name</td>
+                            <td>@contact.Email</td>
+                            <td>@contact.Address</td>
+                        </tr>
+                    }
+
+                }
+            </table>
+        }
+        else
+        {
+            <div>No model found</div>
+        }
+    </div>
+
+    <div class="display-contact">
+        @if (@Model.EditContact != null)
+        {
+            <div>
+                <p class="name">@Model.EditContact.Name</p>
+            </div>
+            <div>
+                <p>Email: @Model.EditContact.Email</p>
+            </div>
+            <div>
+                <p>Mobile: @Model.EditContact.Mobile</p>
+            </div>
+            <div>
+                <p>Landline: @Model.EditContact.Landline</p>
+            </div>
+            <div>
+                <p>Website: @Model.EditContact.Website</p>
+            </div>
+            <div>
+                <p>Address:</p>
+                <p>@Model.EditContact.Address</p>
+            </div>
+        }
+    </div>
+    <div class="button-section">
+        <button onclick="editContact()"><img src="~/assets/images/edit1.jpg" class="edit-image">
+            <p>Edit</p>
+        </button>
+        <button onclick="removeContact()"><img src="~/assets/images/delete1.png">
+            <p>Delete</p>
+        </button>
+    </div>
+</div>
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post, new
+{
+    @class = "edit-form"
+
+}))
+{
+
+    @Html.HiddenFor(contact=>Model.EditContact.ContactId)
+    <div>
+        <label>Name</label>
+        @Html.TextBoxFor(contact=>Model.EditContact.Name)
+        <label>Email</label>
+        @Html.TextBoxFor(contact=>Model.EditContact.Email)
+        <div class="mobile-items">
+            <div>
+                <label>Mobile</label>
+                @Html.TextBoxFor(contact=>Model.EditContact.Mobile)
+            </div>
+            <div class="end-position">
+                <label>Landline</label>
+                @Html.TextBoxFor(contact=>Model.EditContact.Landline)
+            </div>
+        </div>
+        <label>Website</label>
+        @Html.TextBoxFor(contact=>Model.EditContact.Website)
+        <label>Address</label>
+        @Html.TextBoxFor(contact=>Model.EditContact.Address, new {@class="address-box"})
+    </div>
+    <div>
+        <input type="Submit" value="Update" id="Update">
+    </div>
+}
+<script>
+    function display(element) {
+        const id = element.getAttribute("data-contact-id");
+        var url = '@Url.Action("DisplayContact","Home")?contactid=' + id;
+        window.location.href = url;
+    }
+    function editContact() {
+        document.getElementsByClassName("edit-form")[0].style.display = "flex";
+    }
+    function removeContact() {
+        var url = '@Url.Action("Delete","Home")?contactid=' + @Model.EditContact.ContactId;
+        window.location.href = url;
+    }
+</script>

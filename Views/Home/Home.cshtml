@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using System.Web
+@model ContactViewModel
+
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+<div class="contact-table">
+    @if (Model != null && Model.Contacts.Any())
+    {
+        <div>
+            CONTACTS
+        </div>
+        <table>
+            @foreach (Contact contact in Model.Contacts)
+            {
+                <tr data-contact-id="@contact.ContactId" onclick="display(this)">
+                    <td class="contact-name">@contact.Name</td>
+                    <td>@contact.Email</td>
+                    <td>@contact.Address</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+
+
+<script>
+    function display(element) {
+        const id = element.getAttribute("data-contact-id");
+        var url = '@Url.Action("DisplayContact", "Home")?contactid=' + id;
+        window.location.href = url;
+    }
+</script>

@@ -1,0 +1,40 @@
+.contact-table {
+    margin: 20px 20px;
+    width: 30%;
+}
+
+.contact-table div {
+    margin: 15px 0px;
+    font-weight: bold;
+}
+
+.contact-table table {
+    display: flex;
+    flex-direction: column;
+    width: 375px;
+    height: auto;
+}
+
+.contact-table table tr {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+}
+
+.contact-table table tr td{
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.contact-name{
+    font-size: 28px !important;
+    font-weight: 300;
+    padding-left: 0px !important;
+}
+
+.contact {
+    background-color: black;
+}
